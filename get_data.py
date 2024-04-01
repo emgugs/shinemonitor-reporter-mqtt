@@ -9,14 +9,14 @@ import requests
 import config
 from utils import log
 
-# API Reference: http://android.shinemonitor.com/
+# API Reference: http://web.shinemonitor.com/
 
 default_params = ('&i18n=en_US'
                   '&lang=en_US'
                   '&source=1'
-                  '&_app_client_=android'
-                  '&_app_id_=wifiapp.volfw.solarpower'
-                  '&_app_version_=1.1.0.1')
+                  '&_app_client_=web'
+                  '&_app_id_=wwww.dessmonitor.com'
+                  '&_app_version_=1.0.6.3')
 
 
 def get_salt():
@@ -90,7 +90,7 @@ def build_request_url(action, salt, secret, token, devcode, pn, sn, plant_id=Non
     if plant_id:
         action += '&plantid=' + plant_id
     else:
-        action += '&pn=' + pn + '&devcode=' + devcode + '&sn=' + sn + '&devaddr=1'
+        action += '&pn=' + pn + '&devcode=' + devcode + '&sn=' + sn + '&devaddr=5'
     if date:
         action += '&date=' + date
     action += default_params

@@ -254,6 +254,8 @@ def connect_mqtt():
     client.on_connect = on_connect
     client.on_disconnect = on_disconnect
 
+    client.username_pw_set(username=config.mqtt_username, password=config.mqtt_password)
+
     client.will_set(lwt_sensor_topic, payload=lwt_offline_val, retain=True)
 
     try:
@@ -273,6 +275,7 @@ def connect_mqtt():
         start_alive_timer()
 
     return client
+
 
 
 def publish(topic, message, retain=False):
@@ -301,31 +304,32 @@ def prepare_payload(data):
     payload['id'] = data['id']['val']
     payload['timestamp'] = (datetime.strptime(data['Timestamp']['val'], '%Y-%m-%d %H:%M:%S')
                             .astimezone().replace(microsecond=0).isoformat())
-    payload['sn'] = data['SN']['val']
-    payload['machine_type'] = data['Machine type']['val']
-    payload['main_cpu_version'] = data['Main CPU version']['val']
-    payload['slave_1_cpu_version'] = data['Slave 1 CPU version']['val']
-    payload[GRID_VOLTAGE] = float(data['Grid voltage']['val'])
-    payload['grid_frequency'] = float(data['Grid frequency']['val'])
-    payload[PV_INPUT_VOLTAGE] = float(data['PV1 Input voltage']['val'])
-    payload[PV_INPUT_POWER] = int(data['PV1 Input Power']['val'])
-    payload[BATTERY_VOLTAGE] = float(data['Battery Voltage']['val'])
-    payload[BATTERY_CAPACITY] = int(data['Battery Capacity']['val'])
-    payload[BATTERY_DISCHARGE_CURRENT] = float(data['Battery Discharging Current']['val'])
-    payload[BATTERY_CHARGE_CURRENT] = float(data['Battery Charging Current']['val'])
-    payload[AC_OUTPUT_VOLTAGE] = float(data['AC output voltage']['val'])
-    payload['ac_output_frequency'] = float(data['AC Output Frequency']['val'])
-    payload[OUTPUT_LOAD] = int(data['Output load percent']['val'])
-    payload[AC_OUTPUT_ACTIVE_POWER] = int(data['AC output active power']['val'])
-    payload['ac_output_apparent_power'] = int(data['AC output apparent power']['val'])
+    
+    # Check if 'Machine type' key exists before accessing it
+    payload['machine_type'] = data.get('Machine type', {}).get('val', '0')
+    payload['main_cpu_version'] = data.get('Main CPU version', {}).get('val', 'Unknown')
+    payload['slave_1_cpu_version'] = data.get('Slave 1 CPU version', {}).get('val', 'Unknown')
+    payload[GRID_VOLTAGE] = float(data.get('Grid voltage', {}).get('val', 0))
+    payload['grid_frequency'] = float(data.get('Grid frequency', {}).get('val', 0))
+    payload[PV_INPUT_VOLTAGE] = float(data.get('PV1 Input voltage', {}).get('val', 0))
+    payload[PV_INPUT_POWER] = int(data.get('PV1 Input Power', {}).get('val', 0))
+    payload[BATTERY_VOLTAGE] = float(data.get('Battery Voltage', {}).get('val', 0))
+    payload[BATTERY_CAPACITY] = int(data.get('Battery Capacity', {}).get('val', 0))
+    payload[BATTERY_DISCHARGE_CURRENT] = float(data.get('Battery Discharging Current', {}).get('val', 0))
+    payload[BATTERY_CHARGE_CURRENT] = float(data.get('Battery Charging Current', {}).get('val', 0))
+    payload[AC_OUTPUT_VOLTAGE] = float(data.get('AC output voltage', {}).get('val', 0))
+    payload['ac_output_frequency'] = float(data.get('AC Output Frequency', {}).get('val', 0))
+    payload[OUTPUT_LOAD] = int(data.get('Output load percent', {}).get('val', 0))
+    payload[AC_OUTPUT_ACTIVE_POWER] = int(data.get('AC output active power', {}).get('val', 0))
+    payload['ac_output_apparent_power'] = int(data.get('AC output apparent power', {}).get('val', 0))
     # TODO error correction
-    payload[TODAY_GENERATION] = int(data['Today generation']['val'])
-    payload[MONTH_GENERATION] = int(data['Month generation']['val'])
-    payload[YEAR_GENERATION] = int(data['Year generation']['val'])
+    payload[TODAY_GENERATION] = int(data.get('Today generation', {}).get('val', 0))
+    payload[MONTH_GENERATION] = int(data.get('Month generation', {}).get('val', 0))
+    payload[YEAR_GENERATION] = int(data.get('Year generation', {}).get('val', 0))
 
     # Weird error with '-' coming in for some reason in Total generation response
     try:
-        payload[TOTAL_GENERATION] = float(data['Total generation']['val'])
+        payload[TOTAL_GENERATION] = float(data.get('Total generation', {}).get('val', 0))
         prev_total_generation = payload[TOTAL_GENERATION]
     except ValueError:
         payload[TOTAL_GENERATION] = prev_total_generation
@@ -335,6 +339,8 @@ def prepare_payload(data):
     payload_info = OrderedDict()
     payload_info[PAYLOAD_NAME] = payload
     return payload_info
+
+
 
 
 def prepare_discovery_payload(sensor, params):

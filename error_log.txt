@@ -1,0 +1,72 @@
+2024-03-31 22:20:18.673346	Traceback (most recent call last):
+  File "/Users/muhammadhassankhalid/Downloads/shinemonitor-reporter-mqtt-main/publish_data.py", line 461, in <module>
+    last_time = datetime.strptime(publish_solar_data(), '%Y-%m-%d %H:%M:%S').timestamp()
+                                  ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muhammadhassankhalid/Downloads/shinemonitor-reporter-mqtt-main/publish_data.py", line 409, in publish_solar_data
+    _thread.start_new_thread(publish, (values_topic, json.dumps(prepare_payload(response_dict))))
+                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muhammadhassankhalid/Downloads/shinemonitor-reporter-mqtt-main/publish_data.py", line 307, in prepare_payload
+    payload['sn'] = data['SN']['val']
+                    ~~~~^^^^^^
+KeyError: 'SN'
+
+2024-03-31 22:25:35.776910	Traceback (most recent call last):
+  File "/Users/muhammadhassankhalid/Downloads/shinemonitor-reporter-mqtt-main/publish_data.py", line 467, in <module>
+    last_time = datetime.strptime(publish_solar_data(), '%Y-%m-%d %H:%M:%S').timestamp()
+                                  ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muhammadhassankhalid/Downloads/shinemonitor-reporter-mqtt-main/publish_data.py", line 415, in publish_solar_data
+    _thread.start_new_thread(publish, (values_topic, json.dumps(prepare_payload(response_dict))))
+                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muhammadhassankhalid/Downloads/shinemonitor-reporter-mqtt-main/publish_data.py", line 314, in prepare_payload
+    payload['machine_type'] = data['Machine type']['val']
+                              ~~~~^^^^^^^^^^^^^^^^
+KeyError: 'Machine type'
+
+2024-03-31 22:30:22.652862	Traceback (most recent call last):
+  File "/Users/muhammadhassankhalid/Downloads/shinemonitor-reporter-mqtt-main/publish_data.py", line 468, in <module>
+    last_time = datetime.strptime(publish_solar_data(), '%Y-%m-%d %H:%M:%S').timestamp()
+                                  ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muhammadhassankhalid/Downloads/shinemonitor-reporter-mqtt-main/publish_data.py", line 416, in publish_solar_data
+    _thread.start_new_thread(publish, (values_topic, json.dumps(prepare_payload(response_dict))))
+                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muhammadhassankhalid/Downloads/shinemonitor-reporter-mqtt-main/publish_data.py", line 314, in prepare_payload
+    payload['machine_type'] = data['Machine type']['val']
+                              ~~~~^^^^^^^^^^^^^^^^
+KeyError: 'Machine type'
+
+2024-03-31 22:35:33.179889	Traceback (most recent call last):
+  File "/Users/muhammadhassankhalid/Downloads/shinemonitor-reporter-mqtt-main/publish_data.py", line 468, in <module>
+    last_time = datetime.strptime(publish_solar_data(), '%Y-%m-%d %H:%M:%S').timestamp()
+                                  ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muhammadhassankhalid/Downloads/shinemonitor-reporter-mqtt-main/publish_data.py", line 416, in publish_solar_data
+    _thread.start_new_thread(publish, (values_topic, json.dumps(prepare_payload(response_dict))))
+                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muhammadhassankhalid/Downloads/shinemonitor-reporter-mqtt-main/publish_data.py", line 314, in prepare_payload
+    payload['machine_type'] = data['Machine type']['val']
+                              ~~~~^^^^^^^^^^^^^^^^
+KeyError: 'Machine type'
+
+2024-03-31 22:40:10.909576	Traceback (most recent call last):
+  File "/Users/muhammadhassankhalid/Downloads/shinemonitor-reporter-mqtt-main/publish_data.py", line 468, in <module>
+    last_time = datetime.strptime(publish_solar_data(), '%Y-%m-%d %H:%M:%S').timestamp()
+                                  ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muhammadhassankhalid/Downloads/shinemonitor-reporter-mqtt-main/publish_data.py", line 416, in publish_solar_data
+    _thread.start_new_thread(publish, (values_topic, json.dumps(prepare_payload(response_dict))))
+                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muhammadhassankhalid/Downloads/shinemonitor-reporter-mqtt-main/publish_data.py", line 314, in prepare_payload
+    payload['machine_type'] = data['Machine type']['val']
+                              ~~~~^^^^^^^^^^^^^^^^
+KeyError: 'Machine type'
+
+2024-03-31 23:20:04.552881	Traceback (most recent call last):
+  File "/Users/muhammadhassankhalid/Downloads/shinemonitor-reporter-mqtt-main/publish_data.py", line 465, in <module>
+    last_time = datetime.strptime(publish_solar_data(), '%Y-%m-%d %H:%M:%S').timestamp()
+                                  ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muhammadhassankhalid/Downloads/shinemonitor-reporter-mqtt-main/publish_data.py", line 413, in publish_solar_data
+    _thread.start_new_thread(publish, (values_topic, json.dumps(prepare_payload(response_dict))))
+                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muhammadhassankhalid/Downloads/shinemonitor-reporter-mqtt-main/publish_data.py", line 313, in prepare_payload
+    payload[GRID_VOLTAGE] = float(data.get('Grid voltage', {}).get('val', None))
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: float() argument must be a string or a real number, not 'NoneType'
+

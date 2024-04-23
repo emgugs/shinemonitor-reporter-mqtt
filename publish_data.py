@@ -35,6 +35,7 @@ TODAY_GENERATION = 'today_generation'
 MONTH_GENERATION = 'month_generation'
 YEAR_GENERATION = 'year_generation'
 TOTAL_GENERATION = 'total_generation'
+BATTERY_STATUS= 'battery_Status'
 
 detectors = OrderedDict([
     (SHINE_MONITOR, dict(
@@ -65,7 +66,7 @@ detectors = OrderedDict([
         json_value=PV_INPUT_VOLTAGE,
     )),
     (PV_INPUT_POWER, dict(
-        title='PV1 Input Power',
+        title='Solar Panel Generation',
         topic_category='sensor',
         device_class='power',
         state_class='measurement',
@@ -127,7 +128,7 @@ detectors = OrderedDict([
         json_value=OUTPUT_LOAD,
     )),
     (AC_OUTPUT_ACTIVE_POWER, dict(
-        title='AC output active power',
+        title='AC Load',
         topic_category='sensor',
         device_class='power',
         state_class='measurement',
@@ -162,14 +163,21 @@ detectors = OrderedDict([
         icon='mdi:solar-power-variant',
         json_value=YEAR_GENERATION,
     )),
-    (TOTAL_GENERATION, dict(
-        title='Total generation',
+  #  (TOTAL_GENERATION, dict(
+   #     title='Total generation',
+    #    topic_category='sensor',
+     #   device_class='energy',
+     #   state_class='total_increasing',
+     #   unit='kWh',
+     #   icon='mdi:solar-power-variant',
+      #  json_value=TOTAL_GENERATION,
+   # )),
+     (BATTERY_STATUS, dict(
+        title='Battery status',
         topic_category='sensor',
-        device_class='energy',
-        state_class='total_increasing',
-        unit='kWh',
-        icon='mdi:solar-power-variant',
-        json_value=TOTAL_GENERATION,
+        device_class='Battery',
+        icon='mdi:home-battery',
+        json_value=BATTERY_STATUS,
     )),
 
 ])
@@ -306,26 +314,27 @@ def prepare_payload(data):
                             .astimezone().replace(microsecond=0).isoformat())
     
     # Check if 'Machine type' key exists before accessing it
-    payload['machine_type'] = data.get('Machine type', {}).get('val', '0')
+    payload['machine_type'] = data.get('Machine Type', {}).get('val', '0')
     payload['main_cpu_version'] = data.get('Main CPU version', {}).get('val', 'Unknown')
     payload['slave_1_cpu_version'] = data.get('Slave 1 CPU version', {}).get('val', 'Unknown')
     payload[GRID_VOLTAGE] = float(data.get('Grid voltage', {}).get('val', 0))
     payload['grid_frequency'] = float(data.get('Grid frequency', {}).get('val', 0))
-    payload[PV_INPUT_VOLTAGE] = float(data.get('PV1 Input voltage', {}).get('val', 0))
-    payload[PV_INPUT_POWER] = int(data.get('PV1 Input Power', {}).get('val', 0))
+    payload[PV_INPUT_VOLTAGE] = float(data.get('PV Input voltage', {}).get('val', 0))
+    payload[PV_INPUT_POWER] = int(data.get('PV Input Power', {}).get('val', 0))
     payload[BATTERY_VOLTAGE] = float(data.get('Battery Voltage', {}).get('val', 0))
     payload[BATTERY_CAPACITY] = int(data.get('Battery Capacity', {}).get('val', 0))
-    payload[BATTERY_DISCHARGE_CURRENT] = float(data.get('Battery Discharging Current', {}).get('val', 0))
+    payload[BATTERY_DISCHARGE_CURRENT] = float(data.get('Battery Discharge Current', {}).get('val', 0))
     payload[BATTERY_CHARGE_CURRENT] = float(data.get('Battery Charging Current', {}).get('val', 0))
-    payload[AC_OUTPUT_VOLTAGE] = float(data.get('AC output voltage', {}).get('val', 0))
-    payload['ac_output_frequency'] = float(data.get('AC Output Frequency', {}).get('val', 0))
-    payload[OUTPUT_LOAD] = int(data.get('Output load percent', {}).get('val', 0))
-    payload[AC_OUTPUT_ACTIVE_POWER] = int(data.get('AC output active power', {}).get('val', 0))
+    payload[AC_OUTPUT_VOLTAGE] = float(data.get('Output Voltage', {}).get('val', 0))
+    payload['ac_output_frequency'] = float(data.get('Output Frequency', {}).get('val', 0))
+    payload[OUTPUT_LOAD] = int(data.get('AC Output Load', {}).get('val', 0))
+    payload[AC_OUTPUT_ACTIVE_POWER] = int(data.get('Output Active Power', {}).get('val', 0))
     payload['ac_output_apparent_power'] = int(data.get('AC output apparent power', {}).get('val', 0))
     # TODO error correction
     payload[TODAY_GENERATION] = int(data.get('Today generation', {}).get('val', 0))
     payload[MONTH_GENERATION] = int(data.get('Month generation', {}).get('val', 0))
     payload[YEAR_GENERATION] = int(data.get('Year generation', {}).get('val', 0))
+    payload[BATTERY_STATUS] = str(data.get('Battery Status', {}).get('val', 0))
 
     # Weird error with '-' coming in for some reason in Total generation response
     try:

@@ -12,7 +12,7 @@ devcode = '2477'  # Device coding. Obtained from portal
 
 # MQTT settings
 interval_in_minutes = 5
-hostname = '10.10.10.3'
+hostname = '38.7.189.156'
 port = 1883
 discovery_prefix = 'homeassistant'
 base_topic = 'home/nodes'
